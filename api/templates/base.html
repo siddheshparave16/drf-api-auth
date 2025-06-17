@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Default Title{% endblock %}</title>
+    
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom CSS -->
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <header>
+        {% comment %} {% include 'partials/navbar.html' %} {% endcomment %}
+    </header>
+    
+    <main style="margin:5px">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        {% comment %} {% include 'partials/footer.html' %} {% endcomment %}
+    </footer>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-QfI6xkAhBO0I2lv+E/g8yZX6/FfGBCsJ7L1T8iwMyhbX8qll+KC1h7jPf+hcSFb3" crossorigin="anonymous"></script>
+    
+    <!-- Custom JS -->
+    <script src="{% static 'js/scripts.js' %}"></script>
+    
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

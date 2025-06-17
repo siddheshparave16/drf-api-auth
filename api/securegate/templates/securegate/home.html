@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Home{% endblock  %}
+
+{% block content %}
+
+<div class="container" style="margin: 5px">
+    <h3 style="margin: 5px">Welcome to API Authentication.</h3>
+
+    <form method="post" action="{% url 'securegate:logout'%}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger" style="margin: 5px">Logout</button>
+    </form>
+</div>
+
+<br>
+
+<div class="container" style="margin: 5px">
+    <h4>To Get Access AuthToken For API's</h4>
+
+    <form method="post" action="{% url 'securegate:api_token_auth' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">Get API Access Token</button>
+    </form>
+</div>
+
+<br>
+
+<div class="container" style="margin: 5px">
+    <h4>To Get JWT Access Token For API's</h4>
+    <a href="{% url 'securegate:jwt_token_obtain_pair'%}" ><p>Check here.<p></a>
+</div>
+
+<br>
+
+<div class="container" style="margin: 5px">
+    <h4>To Get JWT Access Token Using Refresh Token For API's</h4>
+    <a href="{% url 'securegate:jwt_token_refresh'%}" ><p>Check here.<p></a>
+</div>
+
+
+{% endblock  %}
