@@ -44,11 +44,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Third-Party Apps
-    'rest_framework',
-    'rest_framework.authtoken',
-    'phone_field',
+    'rest_framework',               # Django REST Framework core
+    'rest_framework.authtoken',     # Token authentication for DRF
+    'phone_field',                  # Phone number model field (formatting/validation)
 
-    # custom install app
+    # Local Apps
     'securegate',
 ]
 
@@ -160,11 +160,33 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')     # For collectstatic
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# settings.py
-LOGIN_REDIRECT_URL = '/securegate/'
-LOGOUT_REDIRECT_URL = '/securegate/login/'
 
+# Authentication Redirects
+LOGIN_REDIRECT_URL = '/securegate/'  # Where users are redirected after successful login
+LOGOUT_REDIRECT_URL = '/securegate/login/'  # Where users are redirected after logout
 
+# Authentication Backends
 AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',        # Default backend
+    'django.contrib.auth.backends.ModelBackend',  # Default Django authentication backend
+    # (Add any custom authentication backends here if needed)
 ]
+
+# Django Settings Module Configuration
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'api.settings')  # Sets default settings module
+
+# Celery Configuration
+CELERY_TIMEZONE = "UTC"  # Sets the timezone for Celery tasks
+CELERY_TASK_TRACK_STARTED = True  # Enables tracking when a task starts
+CELERY_TASK_TIME_LIMIT = 30 * 60  # Maximum time (in seconds) a task can run before being terminated (30 minutes)
+
+# Celery Redis Broker Settings
+CELERY_BROKER_URL = 'redis://localhost:6379/0'  # URL for Redis message broker (task queue)
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'  # URL for storing task results
+
+# Email Configuration
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"  # Uses SMTP server for sending emails
+EMAIL_HOST = "smtp.gmail.com"  # SMTP server host (Gmail in this case)
+EMAIL_PORT = 587  # SMTP port (587 is standard for TLS)
+EMAIL_USE_TLS = True  # Enables TLS encryption for email sending
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")  # Email username (from environment variable)
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")  # Email password (from environment variable)

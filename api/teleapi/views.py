@@ -8,13 +8,9 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
-# Create your views here.
-
 @api_view(['GET'])
 def telegram_user_list(request):
-    """
-    This api will generate list of all Telegramusers.
-    """
+    """Get list of all Telegram users (no auth required)"""
     teleusers = TelegramUser.objects.all()
     serializer = TelegramUserSerializer(teleusers, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
@@ -22,8 +18,11 @@ def telegram_user_list(request):
 
 @api_view(['GET', 'POST'])
 def create_telegram_user(request):
+    """
+    GET: Show expected user fields
+    POST: Create new Telegram user
+    """
     if request.method == 'GET':
-        # Return metadata for the POST request fields
         return Response({
             "first_name": "string",
             "last_name": "string",
@@ -43,10 +42,11 @@ def create_telegram_user(request):
 @permission_classes([IsAuthenticated])
 def update_telegram_user(request, pk):
     """
-    Retrieve, update a teleuser.
-    To access this api user should be authenticated using TokenAuth
+    Get/update user details (requires auth)
+    - GET: Get user by ID
+    - PUT: Full update
+    - PATCH: Partial update
     """
-
     try:
         teleuser = TelegramUser.objects.get(pk=pk)
     except TelegramUser.DoesNotExist:
@@ -74,9 +74,7 @@ def update_telegram_user(request, pk):
 @api_view(['GET', 'DELETE'])
 @permission_classes([IsAuthenticated])
 def delete_telegram_user(request, pk):
-    """
-    Retrieve, update or delete a teleuser.
-    """
+    """Get or delete a user (requires auth)"""
     try:
         teleuser = TelegramUser.objects.get(pk=pk)
     except TelegramUser.DoesNotExist:
@@ -94,6 +92,7 @@ def delete_telegram_user(request, pk):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def active_users_today(request):
+    """Get users active in last 24 hours (requires auth)"""
     if request.method == 'GET':
         current_time = timezone.now()
         time_before_twenty_four_ago = current_time - datetime.timedelta(hours=24)
