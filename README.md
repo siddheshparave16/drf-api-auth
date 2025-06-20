@@ -38,20 +38,20 @@ drf-api-auth/ # Repository root
 
 ## Run Services
 
-# Terminal 1: Django
+**Terminal 1: Django**
     cd api 
     python manage.py runserver
 
-# Terminal 2: Celery
+**Terminal 2: Celery**
     celery -A api worker -l info
 
-# Terminal 3: Telegram Bot
+**Terminal 3: Telegram Bot**
     python manage.py runbot
 
 
 
 ## Access API at: 
-# http://localhost:8000/api/v1/
+**http://localhost:8000/api/v1/**
 
 🔐 Authentication Flows
 JWT Tokens: /api/token-jwt/
@@ -77,22 +77,22 @@ Endpoint details: API_DOCS.md
 
 Create a .env file in the project root with the following contents:
 
-# database
+**database**
 DB_NAME=""
 DB_USER=""
 DB_PASSWORD=""
 DB_HOST=127.0.0.1  # Or localhost for windows , we have set this 127.0.0.1 for wsl
 DB_PORT=5432
 
-# smpt email credentials
+**smpt email credentials**
 EMAIL_HOST_USER=""
 EMAIL_HOST_PASSWORD=""
 
-# Telegram bot token
+**Telegram bot token**
 TELEGRAM_BOT_TOKEN=""
 
 
-## ✨ Features of This Project
+#✨ Features of This Project
 
 1. User Authentication:
     - User Registration, Login, and Logout functionalities.
