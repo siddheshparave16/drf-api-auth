@@ -1,14 +1,8 @@
 from django.db import models
-from phone_field import PhoneField
-
-# Create your models here.
-
-from django.db import models
-from phone_field import PhoneField
 
 class TelegramUser(models.Model):
     """
-    Stores Telegram user information. Maintains exact behavior for existing APIs.
+    Stores Telegram user information collected from the bot.
     """
     first_name = models.CharField(
         max_length=50,
@@ -18,33 +12,36 @@ class TelegramUser(models.Model):
     last_name = models.CharField(
         max_length=50,
         help_text="User's last name (max 50 characters, optional)",
-        blank=True
+        blank=True,
+        null=True
     )
     
     username = models.CharField(
         max_length=50,
-        unique=True,  # Ensures no duplicate usernames
-        help_text="Unique Telegram username (@handle, max 50 chars)"
+        unique=True,
+        help_text="Unique Telegram username (@handle, max 50 chars)",
+        blank=True,
+        null=True
     )
     
-    phone = PhoneField(
-        unique=True,  # Prevents duplicate phone numbers
-        help_text='Unique contact phone number in international format (+CountryCode)'
+    telegram_id = models.BigIntegerField(
+        unique=True,
+        help_text="Telegram's unique user ID"
     )
     
     active_at = models.DateTimeField(
         auto_now=True,
-        help_text="Automatically updated to current time on each save"
+        help_text="Last interaction timestamp"
     )
 
     def __str__(self) -> str:
-        return self.username
+        return f"{self.username} (ID: {self.telegram_id})"
 
     class Meta:
         verbose_name = "Telegram User"
         verbose_name_plural = "Telegram Users"
-        ordering = ['-active_at']  # Newest users first
+        ordering = ['-active_at']
         indexes = [
-            models.Index(fields=['username']),  # Optimizes username lookups
-            models.Index(fields=['phone']),     # Optimizes phone lookups
+            models.Index(fields=['username']),
+            models.Index(fields=['telegram_id']),
         ]

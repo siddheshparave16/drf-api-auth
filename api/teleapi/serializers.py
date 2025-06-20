@@ -10,4 +10,4 @@ class TelegramUserSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = TelegramUser
-        fields = ['id', 'first_name', 'last_name', 'username', 'phone']
+        fields = ['id', 'first_name', 'last_name', 'username', 'telegram_id']

@@ -8,12 +8,16 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
+
 @api_view(['GET'])
 def telegram_user_list(request):
     """Get list of all Telegram users (no auth required)"""
-    teleusers = TelegramUser.objects.all()
-    serializer = TelegramUserSerializer(teleusers, many=True)
-    return Response(serializer.data, status=status.HTTP_200_OK)
+    try:
+        teleusers = TelegramUser.objects.all()
+        serializer = TelegramUserSerializer(teleusers, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @api_view(['GET', 'POST'])
@@ -27,7 +31,7 @@ def create_telegram_user(request):
             "first_name": "string",
             "last_name": "string",
             "username": "string",
-            "phone": "string",
+            "telegram_id": "string",
         }, status=status.HTTP_200_OK)
 
     if request.method == 'POST':

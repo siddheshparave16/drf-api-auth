@@ -46,10 +46,10 @@ INSTALLED_APPS = [
     # Third-Party Apps
     'rest_framework',               # Django REST Framework core
     'rest_framework.authtoken',     # Token authentication for DRF
-    'phone_field',                  # Phone number model field (formatting/validation)
 
     # Local Apps
     'securegate',
+    'teleapi',
 ]
 
 REST_FRAMEWORK = {
@@ -184,9 +184,10 @@ CELERY_BROKER_URL = 'redis://localhost:6379/0'  # URL for Redis message broker (
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'  # URL for storing task results
 
 # Email Configuration
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"  # Uses SMTP server for sending emails
-EMAIL_HOST = "smtp.gmail.com"  # SMTP server host (Gmail in this case)
-EMAIL_PORT = 587  # SMTP port (587 is standard for TLS)
-EMAIL_USE_TLS = True  # Enables TLS encryption for email sending
-EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")  # Email username (from environment variable)
-EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")  # Email password (from environment variable)
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"  
+EMAIL_HOST = "smtp.gmail.com"  # SMTP server Gmail host 
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True  
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER") 
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")  
+
